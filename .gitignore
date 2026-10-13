@@ -1,0 +1,13 @@
+# Compiled simulation binaries
+*.vvp
+*.vcd
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# OS junk
+.DS_Store
+Thumbs.db

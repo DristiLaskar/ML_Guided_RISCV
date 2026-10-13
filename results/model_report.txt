@@ -1,0 +1,95 @@
+Baseline tests: 3000   Explore tests: 3000
+Legal bins: 65   RARE bins (p < 0.1): 14
+  bin 68 mem_LW_then_SW_sameaddr          p(random test hits) = 0.005
+  bin 66 mem_SW_then_LW_sameaddr          p(random test hits) = 0.009
+  bin 67 mem_SW_then_SW_sameaddr          p(random test hits) = 0.009
+  bin 43 loaduse_stall_LW                 p(random test hits) = 0.033
+  bin 42 loaduse_stall_ADDI               p(random test hits) = 0.033
+  bin 46 loaduse_stall_BNE                p(random test hits) = 0.048
+  bin 41 loaduse_stall_OR                 p(random test hits) = 0.051
+  bin 39 loaduse_stall_SUB                p(random test hits) = 0.054
+  bin 44 loaduse_stall_SW                 p(random test hits) = 0.055
+  bin 45 loaduse_stall_BEQ                p(random test hits) = 0.059
+  bin 40 loaduse_stall_AND                p(random test hits) = 0.063
+  bin 38 loaduse_stall_ADD                p(random test hits) = 0.064
+  bin 51 fwdbr_BEQ_taken                  p(random test hits) = 0.076
+  bin 54 fwdbr_BNE_nottaken               p(random test hits) = 0.077
+
+Label: test hits >= 2 rare bins   (positive rate 0.43)
+5-fold CV ROC-AUC of the decision tree: 0.704 +/- 0.013  (0.5 = chance)
+
+Feature importances:
+  w5(LW)       0.508
+  p_dep        0.312
+  w8(BNE)      0.090
+  w6(SW)       0.051
+  p_mem        0.036
+  w0(ADD)      0.004
+  w1(SUB)      0.000
+  w2(AND)      0.000
+  w3(OR)       0.000
+  w4(ADDI)     0.000
+  w7(BEQ)      0.000
+
+Learned rules:
+|--- w5 <= 28.50
+|   |--- p_dep <= 40.50
+|   |   |--- p_mem <= 41.50
+|   |   |   |--- w5 <= 20.50
+|   |   |   |   |--- class: 0
+|   |   |   |--- w5 >  20.50
+|   |   |   |   |--- class: 0
+|   |   |--- p_mem >  41.50
+|   |   |   |--- w6 <= 27.50
+|   |   |   |   |--- class: 0
+|   |   |   |--- w6 >  27.50
+|   |   |   |   |--- class: 0
+|   |--- p_dep >  40.50
+|   |   |--- w5 <= 17.50
+|   |   |   |--- p_mem <= 20.50
+|   |   |   |   |--- class: 0
+|   |   |   |--- p_mem >  20.50
+|   |   |   |   |--- class: 0
+|   |   |--- w5 >  17.50
+|   |   |   |--- w8 <= 45.50
+|   |   |   |   |--- class: 1
+|   |   |   |--- w8 >  45.50
+|   |   |   |   |--- class: 0
+|--- w5 >  28.50
+|   |--- p_dep <= 30.50
+|   |   |--- w8 <= 31.50
+|   |   |   |--- w6 <= 23.50
+|   |   |   |   |--- class: 0
+|   |   |   |--- w6 >  23.50
+|   |   |   |   |--- class: 1
+|   |   |--- w8 >  31.50
+|   |   |   |--- w6 <= 46.50
+|   |   |   |   |--- class: 0
+|   |   |   |--- w6 >  46.50
+|   |   |   |   |--- class: 1
+|   |--- p_dep >  30.50
+|   |   |--- w8 <= 6.50
+|   |   |   |--- w0 <= 29.50
+|   |   |   |   |--- class: 1
+|   |   |   |--- w0 >  29.50
+|   |   |   |   |--- class: 1
+|   |   |--- w8 >  6.50
+|   |   |   |--- p_dep <= 50.50
+|   |   |   |   |--- class: 1
+|   |   |   |--- p_dep >  50.50
+|   |   |   |   |--- class: 1
+
+Candidates scored: 50000;  in best leaf(s): 893  (predicted P(high-yield) = 0.96)
+
+Wrote 16 knob vectors to results/knobs.txt  (mean knobs below)
+  w0(ADD)        42.7   (explore mean  29.5)
+  w1(SUB)        35.7   (explore mean  30.2)
+  w2(AND)        42.8   (explore mean  30.5)
+  w3(OR)         28.3   (explore mean  29.7)
+  w4(ADDI)       27.4   (explore mean  29.7)
+  w5(LW)         43.6   (explore mean  30.0)
+  w6(SW)         27.8   (explore mean  29.7)
+  w7(BEQ)        29.9   (explore mean  29.9)
+  w8(BNE)         3.2   (explore mean  29.7)
+  p_dep          47.8   (explore mean  41.8)
+  p_mem          48.2   (explore mean  42.3)
